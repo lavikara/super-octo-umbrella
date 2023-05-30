@@ -69,14 +69,29 @@
         </div>
         <div class="tw-flex tw-mt-8">
           <img
-            class="tw-mr-4"
+            class="tw-cursor-pointer tw-mr-4"
             src="@/assets/img/instagramlogo.svg"
             loading="lazy"
             alt="instagram"
           />
-          <img class="tw-mr-4" src="@/assets/img/facebooklogo.svg" loading="lazy" alt="facebook" />
-          <img class="tw-mr-4" src="@/assets/img/linkedinlogo.svg" loading="lazy" alt="linkedin" />
-          <img class="tw-mr-4" src="@/assets/img/twitterlogo.svg" loading="lazy" alt="twitter" />
+          <img
+            class="tw-cursor-pointer tw-mr-4"
+            src="@/assets/img/facebooklogo.svg"
+            loading="lazy"
+            alt="facebook"
+          />
+          <img
+            class="tw-cursor-pointer tw-mr-4"
+            src="@/assets/img/linkedinlogo.svg"
+            loading="lazy"
+            alt="linkedin"
+          />
+          <img
+            class="tw-cursor-pointer tw-mr-4"
+            src="@/assets/img/twitterlogo.svg"
+            loading="lazy"
+            alt="twitter"
+          />
         </div>
       </div>
     </div>

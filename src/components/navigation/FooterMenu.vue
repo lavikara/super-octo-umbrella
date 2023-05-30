@@ -19,10 +19,6 @@ defineProps({
   title: { type: String, default: () => '', required: true },
   comingSoon: { type: Boolean, default: () => false },
   routeName: { type: String, default: () => '' }
-  //   showSubMenu: { type: Boolean, default: () => false },
-  //   showChevronDown: { type: Boolean, default: () => false },
-  //   mobile: { type: Boolean, default: () => false },
-  //   subMenu: { type: Array }
 })
 </script>
 
