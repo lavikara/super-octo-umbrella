@@ -1,8 +1,16 @@
 <template>
-  <nav id="topnav" class="tw-w-full tw-bg-purple tw-p-4 tw-mx-auto">
+  <nav
+    id="topnav"
+    class="tw-w-full tw-bg-purple tw-p-4 tw-mx-auto"
+    :class="[
+      route.name === 'WaitlistPage' ? 'tw-bg-purple-bg2' : '',
+      route.name === 'InterestCalculatorPage' ? 'tw-bg-purple-bg9' : '',
+      route.name === 'CareerPage' ? 'tw-bg-purple-bg2' : ''
+    ]"
+  >
     <div class="container tw-grid tw-grid-cols-2 tw-pb-">
       <div class="tw-grid tw-grid-cols-3 tw-items-center">
-        <LogoIcon class="tw-cursor-pointer" @click="router.push({ name: 'HomePage' })" />
+        <LogoIcon class="tw-cursor-pointer" @click="gotoPage" />
         <div class="tw-flex tw-items-center tw-mt-2">
           <TopNavMenu
             class="md:tw-mr-6 lg:tw-mr-16"
@@ -65,7 +73,9 @@ let companyFocus = ref(false)
 let learnFocus = ref(false)
 let signInFocus = ref(false)
 let companySubMenu = reactive([{ title: 'Career', routeName: 'CareerPage' }])
-let productSubMenu = reactive([{ title: 'Interest Calculator', routeName: 'InterestCalculator' }])
+let productSubMenu = reactive([
+  { title: 'Interest Calculator', routeName: 'InterestCalculatorPage' }
+])
 const createAccountBtnStyle = reactive({
   backgroundColor: '#8807F7',
   color: '#FFFFFF',
@@ -84,7 +94,7 @@ const setFocus = (route) => {
     case 'BusinessPage':
       businessFocus.value = true
       break
-    case 'InterestCalculator':
+    case 'InterestCalculatorPage':
       productsFocus.value = true
       break
     case 'LearnPage':
@@ -95,6 +105,21 @@ const setFocus = (route) => {
       break
     case 'CareerPage':
       companyFocus.value = true
+      break
+  }
+}
+
+const gotoPage = () => {
+  switch (route.name) {
+    case 'WaitlistPage':
+      router.push({ name: 'HomePage' })
+      break
+    case 'HomePage':
+      router.push({ name: 'WaitlistPage' })
+      break
+
+    default:
+      router.push({ name: 'WaitlistPage' })
       break
   }
 }

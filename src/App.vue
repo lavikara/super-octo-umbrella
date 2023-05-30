@@ -5,6 +5,7 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useStore } from 'vuex'
+import 'vue3-carousel/dist/carousel.css'
 
 const store = useStore()
 

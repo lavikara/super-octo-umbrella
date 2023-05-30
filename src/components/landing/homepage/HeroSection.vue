@@ -43,7 +43,6 @@ const getStartedBtnStyle = reactive({
 <style lang="scss" scoped>
 #home-page-hero-section {
   background: url(@/assets/img/hero-background.svg);
-  background-attachment: fixed;
   background-position: center;
   background-clip: border-box;
   background-repeat: no-repeat;

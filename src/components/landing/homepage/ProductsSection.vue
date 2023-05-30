@@ -1,5 +1,5 @@
 <template>
-  <div id="products-section" class="tw-bg-purple">
+  <div id="products-section">
     <div class="tw-bg-gray-bg1 tw-rounded-t-3xl tw-px-4">
       <div
         class="gsapContainer container md:tw-h-screen tw-overflow-hidden tw-pt-14 md:tw-pt-24 xxl:tw-pt-28"

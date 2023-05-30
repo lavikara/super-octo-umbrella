@@ -4,17 +4,20 @@
     <MobileNav class="tw-fixed lg:tw-hidden tw-z-50" />
     <router-view v-slot="{ Component }">
       <transition name="fade-transform" mode="out-in">
-        <component :is="Component" class="tw-bg-purple" />
+        <component :is="Component" />
       </transition>
     </router-view>
-    <FooterComponent />
+    <FooterComponent v-if="route.name !== 'WaitlistPage'" />
   </div>
 </template>
 
 <script setup>
+import { useRoute } from 'vue-router'
 import TopNav from '@/layout/navigation/TopNav.vue'
 import MobileNav from '@/layout/navigation/MobileNav.vue'
 import FooterComponent from '@/layout/navigation/FooterComponent.vue'
+
+const route = useRoute()
 </script>
 
 <style lang="scss" scoped>

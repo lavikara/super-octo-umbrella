@@ -1,5 +1,5 @@
 <template>
-  <div id="homepage">
+  <div id="homepage" class="tw-bg-purple">
     <HeroSection />
     <ProductsSection />
     <TransparencySection />
@@ -8,7 +8,6 @@
     <WordForItSection />
     <AvailableSection />
     <TractionSection />
-    <!-- <FooterComponent /> -->
   </div>
 </template>
 
@@ -21,8 +20,6 @@ import AccessMoreSection from '@/components/landing/homepage/AccessMoreSection.v
 import WordForItSection from '@/components/landing/homepage/WordForItSection.vue'
 import AvailableSection from '@/components/landing/homepage/AvailableSection.vue'
 import TractionSection from '@/components/landing/homepage/TractionSection.vue'
-// import FooterComponent from '@/components/navigation/FooterComponent.vue'
-import 'vue3-carousel/dist/carousel.css'
 </script>
 
 <style lang="scss" scoped></style>

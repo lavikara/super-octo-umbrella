@@ -1,6 +1,13 @@
 <template>
   <div id="mobile-nav" class="tw-w-full">
-    <nav class="navbar tw-flex tw-justify-between tw-items-center tw-bg-purple tw-p-4">
+    <nav
+      class="navbar tw-flex tw-justify-between tw-items-center tw-bg-purple tw-p-4"
+      :class="[
+        route.name === 'WaitlistPage' ? 'tw-bg-purple-bg2' : '',
+        route.name === 'InterestCalculatorPage' ? 'tw-bg-purple-bg9' : '',
+        route.name === 'CareerPage' ? 'tw-bg-purple-bg2' : ''
+      ]"
+    >
       <div
         class="navbar-container tw-top-0 tw-flex tw-z-20 tw-items-center tw-w-full tw-justify-between tw-z-50"
       >
@@ -83,7 +90,7 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import LogoIcon from '@/components/icons/LogoIcon.vue'
 import HamburgerIcon from '@/components/icons/CloseIcon.vue'
 import CloseIcon from '@/components/icons/HamburgerIcon.vue'
@@ -91,12 +98,15 @@ import TopNavMenu from '@/components/navigation/TopNavMenu.vue'
 import BtnComponent from '@/components/general/BtnComponent.vue'
 import ChevronDown from '@/components/icons/ChevronDown.vue'
 
+const route = useRoute()
 const router = useRouter()
 
 let mobileSidebar = ref()
 let menuState = ref(false)
 let companySubMenu = reactive([{ title: 'Career', routeName: 'CareerPage' }])
-let productSubMenu = reactive([{ title: 'Interest Calculator', routeName: 'InterestCalculator' }])
+let productSubMenu = reactive([
+  { title: 'Interest Calculator', routeName: 'InterestCalculatorPage' }
+])
 const createAccountBtnStyle = reactive({
   backgroundColor: '#8807F7',
   color: '#FFFFFF',
@@ -114,7 +124,18 @@ const closeSidebar = (title) => {
 }
 
 const gotoHome = () => {
-  router.push({ name: 'HomePage' })
+  switch (route.name) {
+    case 'WaitlistPage':
+      router.push({ name: 'HomePage' })
+      break
+    case 'HomePage':
+      router.push({ name: 'WaitlistPage' })
+      break
+
+    default:
+      router.push({ name: 'WaitlistPage' })
+      break
+  }
   mobileSidebar.value.checked = false
   menuState.value = false
 }
