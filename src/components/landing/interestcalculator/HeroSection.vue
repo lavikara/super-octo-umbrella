@@ -31,7 +31,7 @@
           <NumberInputFloat
             label=" How much are you saving?"
             name="amount"
-            type="tel"
+            type="text"
             id="amount"
             :reset="reset"
             @set="setInput"
@@ -42,7 +42,7 @@
           <NumberInputFloat
             :label="label"
             name="duration"
-            type="tel"
+            type="text"
             id="duration"
             :reset="reset"
             @set="setInput"
@@ -159,6 +159,7 @@ const resetValue = (value) => {
   frequency.value = ''
   amount.value = 0
   duration.value = 0
+  totalDuration.value = 0
 }
 
 const calculateInterest = () => {

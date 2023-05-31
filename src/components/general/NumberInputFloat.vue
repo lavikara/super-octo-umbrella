@@ -74,6 +74,10 @@ const setInput = () => {
   if (numberData.value === '') return
   numberData.value = numberData.value.replace(/\,/g, '')
   numberData.value = parseInt(numberData.value, 10)
+  if (isNaN(numberData.value)) {
+    numberData.value = null
+    return
+  }
   emittedNumberData.value = numberData.value
   numberData.value = addCommaToNumber(numberData.value)
   showError.value = false
