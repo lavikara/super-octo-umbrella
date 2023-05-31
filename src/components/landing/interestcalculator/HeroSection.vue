@@ -160,6 +160,7 @@ const resetValue = (value) => {
   amount.value = 0
   duration.value = 0
   totalDuration.value = 0
+  payload = []
 }
 
 const calculateInterest = () => {

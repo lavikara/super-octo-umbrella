@@ -55,10 +55,10 @@
                 loading="lazy"
                 alt="product"
               />
-              <img class="gsapLearnImg tw-mb-64" :src="learn" loading="lazy" alt="product" />
-              <img class="gsapBudgetImg tw-mb-64" :src="budget" loading="lazy" alt="product" />
-              <img class="gsapInvestImg tw-mb-64" :src="invest" loading="lazy" alt="product" />
-              <img class="gsapInsuranceImg" :src="insurance" loading="lazy" alt="product" />
+              <img class="gsapLearnImg tw-mb-64" :src="learn" alt="product" />
+              <img class="gsapBudgetImg tw-mb-64" :src="budget" alt="product" />
+              <img class="gsapInvestImg tw-mb-64" :src="invest" alt="product" />
+              <img class="gsapInsuranceImg" :src="insurance" alt="product" />
             </div>
           </div>
           <div class="md:tw-hidden">

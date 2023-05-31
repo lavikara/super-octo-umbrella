@@ -1,7 +1,7 @@
 <template>
   <div id="number-input-float">
     <div class="input-container tw-relative tw-flex tw-flex-col">
-      <label for="name" class="tw-invisible">{{ label }}</label>
+      <label :for="id" class="tw-invisible">{{ label }}</label>
       <input
         class="input-field tw-text-3xl tw-text-white"
         :class="[
@@ -72,7 +72,7 @@ const validate = () => {
 
 const setInput = () => {
   if (numberData.value === '') return
-  numberData.value = numberData.value.replace(/\,/g, '')
+  numberData.value = numberData.value.split(',').join('')
   numberData.value = parseInt(numberData.value, 10)
   if (isNaN(numberData.value)) {
     numberData.value = null
@@ -92,7 +92,6 @@ const animateLabelOnFocus = () => {
 watch(resetInput, (newVal, oldVal) => {
   if (oldVal !== newVal) {
     numberData.value = null
-    // emit('reset', { value: numberDataValid.value, inputName: props.name })
   }
 })
 </script>

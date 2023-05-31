@@ -1,6 +1,6 @@
 <template>
   <div id="select-input" class="tw-relative tw-w-full tw-max-w-sm tw-flex tw-flex-col">
-    <label :for="label" class="tw-text-gray-bg2">
+    <label :for="id" class="tw-text-gray-bg2">
       {{ showLabel ? label : '' }}
     </label>
     <select
@@ -69,6 +69,7 @@ const validate = () => {
 const setInput = () => {
   showError.value = false
   errorMsg.value = ''
+  if (!optionData.value) return
   emit('set', { value: optionData.value, inputName: props.name })
   validate()
 }
