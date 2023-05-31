@@ -22,7 +22,17 @@
         Ardilla has made it so much easier for you to start building wealth. Take advantage of the
         Ardilla platform by signing up with your email address.
       </p>
-      <TextInput class="sm:tw-w-[30rem] tw-mt-12 tw-mx-auto" />
+      <form @submit.prevent="joinWaitlist">
+        <TextInput
+          class="sm:tw-w-[30rem] tw-mt-12 tw-mx-auto"
+          name="email"
+          id="waitlistEmail"
+          placeHolder="someone@example.com"
+          type="email"
+          @set="setEmail"
+          @valid="setValid"
+        />
+      </form>
       <img
         class="tw-w-52 lg:tw-w-72 xl:tw-w-96 xxxl:tw-w-[28rem] tw-absolute tw-bottom-00 lg:tw--bottom-44 tw-right-0"
         src="@/assets/img/waitlistimg.svg"
@@ -34,7 +44,24 @@
 </template>
 
 <script setup>
+import { ref, reactive } from 'vue'
 import TextInput from '@/components/general/TextInput.vue'
+
+const inputValid = ref()
+const payload = reactive({})
+
+const joinWaitlist = () => {
+  if (inputValid.value === null) return
+  alert(JSON.stringify(payload))
+}
+
+const setEmail = (text) => {
+  payload.email = text
+}
+
+const setValid = (value) => {
+  inputValid.value = value
+}
 </script>
 
 <style lang="scss" scoped>

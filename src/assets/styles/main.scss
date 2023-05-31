@@ -39,6 +39,8 @@ select {
 button {
   cursor: pointer;
   transition: 0.5s ease all;
+  outline: none;
+
   &:disabled {
     cursor: not-allowed;
     // background-color: rgba(77, 132, 255, 0.5);
