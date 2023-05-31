@@ -1,9 +1,11 @@
 <template>
   <div>
-    <h1>Hello from CreateAccountPage</h1>
+    <EmptyLayout />
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import EmptyLayout from '@/components/general/EmptyLayout.vue'
+</script>
 
 <style lang="scss" scoped></style>
