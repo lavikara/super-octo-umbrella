@@ -69,6 +69,7 @@ const validate = () => {
 const setInput = () => {
   showError.value = false
   errorMsg.value = ''
+  if (!optionData.value) return
   emit('set', { value: optionData.value, inputName: props.name })
   validate()
 }

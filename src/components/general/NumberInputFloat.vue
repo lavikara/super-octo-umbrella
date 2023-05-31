@@ -72,7 +72,7 @@ const validate = () => {
 
 const setInput = () => {
   if (numberData.value === '') return
-  numberData.value = numberData.value.replace(/\,/g, '')
+  numberData.value = numberData.value.split(',').join('')
   numberData.value = parseInt(numberData.value, 10)
   if (isNaN(numberData.value)) {
     numberData.value = null
@@ -92,7 +92,6 @@ const animateLabelOnFocus = () => {
 watch(resetInput, (newVal, oldVal) => {
   if (oldVal !== newVal) {
     numberData.value = null
-    // emit('reset', { value: numberDataValid.value, inputName: props.name })
   }
 })
 </script>
