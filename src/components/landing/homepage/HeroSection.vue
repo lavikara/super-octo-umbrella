@@ -20,7 +20,7 @@
       />
     </div>
     <div class="tw-flex tw-justify-center tw-mt-12">
-      <img class="" src="@/assets/img/hero-img.svg" loading="lazy" alt="profile" />
+      <img class="" src="@/assets/img/hero-img.svg" alt="profile" />
     </div>
   </div>
 </template>
