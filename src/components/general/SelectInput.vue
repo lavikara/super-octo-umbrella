@@ -1,6 +1,6 @@
 <template>
   <div id="select-input" class="tw-relative tw-w-full tw-max-w-sm tw-flex tw-flex-col">
-    <label :for="label" class="tw-text-gray-bg2">
+    <label :for="id" class="tw-text-gray-bg2">
       {{ showLabel ? label : '' }}
     </label>
     <select

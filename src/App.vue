@@ -19,9 +19,7 @@ onUnmounted(() => {
 
 onMounted(() => {
   document.addEventListener('readystatechange', pageReady)
-  // if (this.prevRoute !== 'home' && this.prevRoute !== undefined) {
   pageReady()
-  // }
   store.dispatch('UpdateScreenSize', window.innerWidth)
 })
 
@@ -29,7 +27,7 @@ const pageReady = (event) => {
   if (event?.target?.readyState === 'complete') {
     setTimeout(() => {
       loading.value = false
-    }, 1000)
+    }, 2000)
   }
 }
 </script>

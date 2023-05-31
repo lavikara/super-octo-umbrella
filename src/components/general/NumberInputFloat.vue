@@ -1,7 +1,7 @@
 <template>
   <div id="number-input-float">
     <div class="input-container tw-relative tw-flex tw-flex-col">
-      <label for="name" class="tw-invisible">{{ label }}</label>
+      <label :for="id" class="tw-invisible">{{ label }}</label>
       <input
         class="input-field tw-text-3xl tw-text-white"
         :class="[
