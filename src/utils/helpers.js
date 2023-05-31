@@ -21,3 +21,13 @@ export const emailValidation = (email) => {
 export const selectValidation = (option, optionList) => {
   return optionList.includes(option)
 }
+
+export const formatAmountToDollar = (amount, decimal, currency) => {
+  if (amount === undefined) return
+  const value = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: currency,
+    minimumFractionDigits: decimal
+  })
+  return value.format(amount)
+}

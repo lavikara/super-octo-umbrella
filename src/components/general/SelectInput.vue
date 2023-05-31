@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref, watchEffect } from 'vue'
+import { ref, computed, watch, watchEffect } from 'vue'
 import ChevronSolidDown from '@/components/icons/ChevronSolidDown.vue'
 import { selectValidation } from '@/utils/helpers'
 
@@ -41,13 +41,18 @@ const props = defineProps({
   name: { type: String, default: () => '', required: true },
   id: { type: String, default: () => '', required: true },
   required: { type: Boolean, default: () => true },
-  showChevronDown: { type: Boolean, default: () => false }
+  showChevronDown: { type: Boolean, default: () => false },
+  reset: { type: Boolean, default: () => false }
 })
 
 let optionData = ref('')
 let optionDataValid = ref()
 let showError = ref(false)
 let errorMsg = ref('')
+
+const resetInput = computed(() => {
+  return props.reset
+})
 
 const validate = () => {
   if (optionData.value.length === 0) return
@@ -67,6 +72,10 @@ const setInput = () => {
   emit('set', { value: optionData.value, inputName: props.name })
   validate()
 }
+
+watch(resetInput, (newVal, oldVal) => {
+  if (oldVal !== newVal) optionData.value = ''
+})
 
 watchEffect(() => emit('set', optionData.value))
 </script>

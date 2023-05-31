@@ -16,7 +16,7 @@
         v-model="numberData"
         @input="setInput"
         @blur="validate"
-        @keydown.enter="input.blur()"
+        @keydown.enter="validate"
         @focus="animateLabelOnFocus"
         required
       />
@@ -31,16 +31,17 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { isNumber, addCommaToNumber } from '@/utils/helpers'
 
-const emit = defineEmits(['set', 'valid'])
+const emit = defineEmits(['set', 'valid', 'reset'])
 
 const props = defineProps({
   label: { type: String, default: () => '', required: true },
   id: { type: String, default: () => '' },
   name: { type: String, default: () => '' },
-  type: { type: String, default: () => '' }
+  type: { type: String, default: () => '' },
+  reset: { type: Boolean, default: () => false }
 })
 
 let labelText = ref()
@@ -50,6 +51,10 @@ let emittedNumberData = ref(null)
 let numberDataValid = ref()
 let showError = ref(false)
 let errorMsg = ref('')
+
+const resetInput = computed(() => {
+  return props.reset
+})
 
 const validate = () => {
   numberDataValid.value = isNumber(emittedNumberData.value)
@@ -67,7 +72,7 @@ const validate = () => {
 
 const setInput = () => {
   if (numberData.value === '') return
-  numberData.value = numberData.value.replace(/\,/g, '') // 1125, but a string, so convert it to number
+  numberData.value = numberData.value.replace(/\,/g, '')
   numberData.value = parseInt(numberData.value, 10)
   emittedNumberData.value = numberData.value
   numberData.value = addCommaToNumber(numberData.value)
@@ -79,6 +84,13 @@ const setInput = () => {
 const animateLabelOnFocus = () => {
   labelText.value.classList.add('input-selected')
 }
+
+watch(resetInput, (newVal, oldVal) => {
+  if (oldVal !== newVal) {
+    numberData.value = null
+    // emit('reset', { value: numberDataValid.value, inputName: props.name })
+  }
+})
 </script>
 
 <style lang="scss" scoped>

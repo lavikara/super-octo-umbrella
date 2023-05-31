@@ -20,6 +20,7 @@
             label="How often are you saving?"
             id="frequency"
             name="frequency"
+            :reset="reset"
             :showLabel="true"
             :showChevronDown="true"
             @set="setInput"
@@ -32,6 +33,7 @@
             name="amount"
             type="tel"
             id="amount"
+            :reset="reset"
             @set="setInput"
             @valid="setValid"
           />
@@ -42,6 +44,7 @@
             name="duration"
             type="tel"
             id="duration"
+            :reset="reset"
             @set="setInput"
             @valid="setValid"
           />
@@ -52,19 +55,23 @@
       >
         <div class="tw-mb-10">
           <p class="tw-text-gray-bg2 tw-text-sm">Total Balance</p>
-          <h3 class="tw-font-bold tw-text-2xl">{{ totalSavings + interest }}</h3>
+          <h3 class="tw-font-bold tw-text-2xl">
+            {{ formatAmountToDollar(totalSavings + interest, 2, 'NGN') }}
+          </h3>
         </div>
         <div class="tw-mb-10">
           <p class="tw-text-gray-bg2 tw-text-sm">Interest</p>
           <div class="tw-flex tw-items-center">
-            <h3 class="tw-font-bold tw-text-2xl">{{ interest }}</h3>
+            <h3 class="tw-font-bold tw-text-2xl">{{ formatAmountToDollar(interest, 2, 'NGN') }}</h3>
             <span class="tw-ml-2">({{ percentage }}%)</span>
           </div>
         </div>
         <div class="tw-mb-10">
           <p class="tw-text-gray-bg2 tw-text-sm">Total Savings</p>
           <div class="tw-flex tw-items-center">
-            <h3 class="tw-font-bold tw-text-2xl">{{ totalSavings }}</h3>
+            <h3 class="tw-font-bold tw-text-2xl">
+              {{ formatAmountToDollar(totalSavings, 2, 'NGN') }}
+            </h3>
             <span class="tw-ml-2">({{ percentage }}%)</span>
           </div>
         </div>
@@ -81,16 +88,21 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive } from 'vue'
+import { useRouter } from 'vue-router'
 import SelectInput from '@/components/general/SelectInput.vue'
 import NumberInputFloat from '@/components/general/NumberInputFloat.vue'
 import BtnComponent from '@/components/general/BtnComponent.vue'
+import { formatAmountToDollar } from '@/utils/helpers'
+
+const router = useRouter()
 
 let frequency = ref('')
 let amount = ref(0)
 let duration = ref(0)
 let totalDuration = ref(0)
 let totalSavings = ref(0)
+let reset = ref(false)
 let label = ref('How long are you saving for? (In months)')
 let payloadValid = reactive([])
 let options = reactive(['Daily', 'Weekly', 'Monthly'])
@@ -110,15 +122,15 @@ const checkDuration = () => {
   switch (frequency.value) {
     case 'Daily':
       totalDuration.value = duration.value / 30
-      totalDuration.value >= 3 ? calculateInterest() : alert('Duration should be at least 90 days')
+      totalDuration.value >= 3 ? calculateInterest() : resetValue(frequency.value)
       break
     case 'Weekly':
       totalDuration.value = duration.value / 4
-      totalDuration.value >= 3 ? calculateInterest() : alert('Duration should be at least 12 weeks')
+      totalDuration.value >= 3 ? calculateInterest() : resetValue(frequency.value)
       break
     case 'Monthly':
       totalDuration.value = duration.value
-      totalDuration.value >= 3 ? calculateInterest() : alert('Duration should be at least 3 months')
+      totalDuration.value >= 3 ? calculateInterest() : resetValue(frequency.value)
       break
 
     default:
@@ -126,8 +138,31 @@ const checkDuration = () => {
   }
 }
 
+const resetValue = (value) => {
+  switch (value) {
+    case 'Daily':
+      alert('Duration should be at least 90 days')
+      break
+
+    case 'Weekly':
+      alert('Duration should be at least 12 weeks')
+      break
+
+    case 'Monthly':
+      alert('Duration should be at least 3 months')
+      break
+
+    default:
+      break
+  }
+  reset.value = !reset.value
+  frequency.value = ''
+  amount.value = 0
+  duration.value = 0
+}
+
 const calculateInterest = () => {
-  totalSavings.value = amount.value * totalDuration.value
+  totalSavings.value = amount.value * duration.value
   if (totalDuration.value >= 3 && totalDuration.value < 6) {
     interest.value = (totalSavings.value / 100) * 2
     percentage.value = 2
