@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, watchEffect } from 'vue'
+import { ref, computed, watch } from 'vue'
 import ChevronSolidDown from '@/components/icons/ChevronSolidDown.vue'
 import { selectValidation } from '@/utils/helpers'
 
@@ -76,8 +76,6 @@ const setInput = () => {
 watch(resetInput, (newVal, oldVal) => {
   if (oldVal !== newVal) optionData.value = ''
 })
-
-watchEffect(() => emit('set', optionData.value))
 </script>
 
 <style lang="scss" scoped></style>

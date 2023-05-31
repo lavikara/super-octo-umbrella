@@ -182,26 +182,6 @@ const calculateInterest = () => {
   }
 }
 
-const setInput = (value) => {
-  if (!value) return
-  switch (value.inputName) {
-    case 'frequency':
-      frequency.value = value.value
-      value.value === 'Daily' ? (label.value = `How long are you saving for? (In days)`) : ''
-      value.value === 'Weekly' ? (label.value = `How long are you saving for? (In weeks)`) : ''
-      value.value === 'Monthly' ? (label.value = `How long are you saving for? (In months)`) : ''
-      break
-    case 'amount':
-      amount.value = value.value
-      break
-    case 'duration':
-      duration.value = value.value
-      break
-    default:
-      break
-  }
-}
-
 const checkPayload = (keys) => {
   payloadValid = keys.map((key) => key in payload)
 }
@@ -223,6 +203,26 @@ const setPayload = (value) => {
       payload.duration = duration.value
       checkPayload(['frequency', 'amount'])
       payloadValid.includes(false) ? '' : checkDuration()
+      break
+    default:
+      break
+  }
+}
+
+const setInput = (value) => {
+  if (!value) return
+  switch (value.inputName) {
+    case 'frequency':
+      frequency.value = value.value
+      value.value === 'Daily' ? (label.value = `How long are you saving for? (In days)`) : ''
+      value.value === 'Weekly' ? (label.value = `How long are you saving for? (In weeks)`) : ''
+      value.value === 'Monthly' ? (label.value = `How long are you saving for? (In months)`) : ''
+      break
+    case 'amount':
+      amount.value = value.value
+      break
+    case 'duration':
+      duration.value = value.value
       break
     default:
       break
