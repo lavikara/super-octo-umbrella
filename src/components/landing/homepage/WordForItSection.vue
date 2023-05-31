@@ -24,11 +24,9 @@
                 loading="lazy"
                 alt="play"
               />
-              <div
-                class="tw-absolute tw-bottom-2 tw-left-2 lg:tw-bottom-4 lg:tw-left-4 tw-text-white"
-              >
-                <p class="tw-text-left tw-text-[0.4rem] md:tw-text-sm">{{ slide.name }}</p>
-                <p class="tw-text-left tw-text-[0.2rem] md:tw-text-[0.6rem]">{{ slide.content }}</p>
+              <div class="tw-absolute tw-bottom-4 tw-left-4 tw-text-white">
+                <p class="tw-text-left tw-text-sm md:tw-text-sm">{{ slide.name }}</p>
+                <p class="tw-text-left tw-text-[0.5rem] md:tw-text-[0.6rem]">{{ slide.content }}</p>
               </div>
             </span>
             <div class="overlay"></div>
