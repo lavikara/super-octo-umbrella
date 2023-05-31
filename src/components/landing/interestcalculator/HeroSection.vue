@@ -6,7 +6,7 @@
     <div
       class="container md:tw-grid md:tw-grid-cols-2 tw-justify-items-center tw-gap-4 lg:tw-gap-8"
     >
-      <div>
+      <form @submit.prevent="calculateInterest">
         <div>
           <h1
             class="tw-text-white tw-font-bold tw-text-3xl tw-leading-normal md:tw-text-2xl md:tw-leading-normal lg:tw-text-3xl lg:tw-leading-normal xl:tw-text-4xl tw-mb-14"
@@ -18,36 +18,54 @@
             defaltOption="Select frequency"
             :list="options"
             label="How often are you saving?"
+            id="frequency"
+            name="frequency"
             :showLabel="true"
             :showChevronDown="true"
+            @set="setInput"
+            @valid="setValid"
           />
         </div>
         <div class="tw-mt-12">
-          <NumberInputFloat label=" How much are you saving?" />
+          <NumberInputFloat
+            label=" How much are you saving?"
+            name="amount"
+            type="tel"
+            id="amount"
+            @set="setInput"
+            @valid="setValid"
+          />
         </div>
         <div class="tw-mt-12">
-          <NumberInputFloat label="How long are you saving for? (In months)" />
+          <NumberInputFloat
+            :label="label"
+            name="duration"
+            type="tel"
+            id="duration"
+            @set="setInput"
+            @valid="setValid"
+          />
         </div>
-      </div>
+      </form>
       <div
         class="tw-bg-white tw-rounded-t-3xl tw-px-4 tw-py-8 md:tw-p-8 lg:tw-px-16 lg:tw-py-12 tw-mt-20 md:tw-mt-0"
       >
         <div class="tw-mb-10">
           <p class="tw-text-gray-bg2 tw-text-sm">Total Balance</p>
-          <h3 class="tw-font-bold tw-text-2xl">6,600</h3>
+          <h3 class="tw-font-bold tw-text-2xl">{{ totalSavings + interest }}</h3>
         </div>
         <div class="tw-mb-10">
           <p class="tw-text-gray-bg2 tw-text-sm">Interest</p>
           <div class="tw-flex tw-items-center">
-            <h3 class="tw-font-bold tw-text-2xl">6,600</h3>
-            <span class="tw-ml-2">(2%)</span>
+            <h3 class="tw-font-bold tw-text-2xl">{{ interest }}</h3>
+            <span class="tw-ml-2">({{ percentage }}%)</span>
           </div>
         </div>
         <div class="tw-mb-10">
           <p class="tw-text-gray-bg2 tw-text-sm">Total Savings</p>
           <div class="tw-flex tw-items-center">
-            <h3 class="tw-font-bold tw-text-2xl">6,600</h3>
-            <span class="tw-ml-2">(2%)</span>
+            <h3 class="tw-font-bold tw-text-2xl">{{ totalSavings }}</h3>
+            <span class="tw-ml-2">({{ percentage }}%)</span>
           </div>
         </div>
         <img class="" src="@/assets/img/graph.svg" loading="lazy" alt="graph" />
@@ -63,12 +81,22 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import SelectInput from '@/components/general/SelectInput.vue'
 import NumberInputFloat from '@/components/general/NumberInputFloat.vue'
 import BtnComponent from '@/components/general/BtnComponent.vue'
 
-let options = reactive(['Daily', 'Weakly', 'Monthly'])
+let frequency = ref('')
+let amount = ref(0)
+let duration = ref(0)
+let totalDuration = ref(0)
+let totalSavings = ref(0)
+let label = ref('How long are you saving for? (In months)')
+let payloadValid = reactive([])
+let options = reactive(['Daily', 'Weekly', 'Monthly'])
+let interest = ref(0)
+let percentage = ref(0)
+let payload = reactive({})
 
 const getStartedBtnStyle = reactive({
   backgroundColor: '#8807F7',
@@ -76,6 +104,116 @@ const getStartedBtnStyle = reactive({
   hoverColor: '#FFFFFF',
   hoverBgColor: '#1B0132'
 })
+
+const checkDuration = () => {
+  totalDuration.value = 0
+  switch (frequency.value) {
+    case 'Daily':
+      totalDuration.value = duration.value / 30
+      totalDuration.value >= 3 ? calculateInterest() : alert('Duration should be at least 90 days')
+      break
+    case 'Weekly':
+      totalDuration.value = duration.value / 4
+      totalDuration.value >= 3 ? calculateInterest() : alert('Duration should be at least 12 weeks')
+      break
+    case 'Monthly':
+      totalDuration.value = duration.value
+      totalDuration.value >= 3 ? calculateInterest() : alert('Duration should be at least 3 months')
+      break
+
+    default:
+      break
+  }
+}
+
+const calculateInterest = () => {
+  totalSavings.value = amount.value * totalDuration.value
+  if (totalDuration.value >= 3 && totalDuration.value < 6) {
+    interest.value = (totalSavings.value / 100) * 2
+    percentage.value = 2
+  }
+  if (totalDuration.value >= 6 && totalDuration.value < 9) {
+    interest.value = (totalSavings.value / 100) * 5
+    percentage.value = 5
+  }
+  if (totalDuration.value >= 9 && totalDuration.value < 12) {
+    interest.value = (totalSavings.value / 100) * 9
+    percentage.value = 9
+  }
+  if (totalDuration.value >= 12) {
+    interest.value = (totalSavings.value / 100) * 13
+    percentage.value = 13
+  }
+}
+
+const setInput = (value) => {
+  if (!value) return
+  switch (value.inputName) {
+    case 'frequency':
+      frequency.value = value.value
+      value.value === 'Daily' ? (label.value = `How long are you saving for? (In days)`) : ''
+      value.value === 'Weekly' ? (label.value = `How long are you saving for? (In weeks)`) : ''
+      value.value === 'Monthly' ? (label.value = `How long are you saving for? (In months)`) : ''
+      break
+    case 'amount':
+      amount.value = value.value
+      break
+    case 'duration':
+      duration.value = value.value
+      break
+    default:
+      break
+  }
+}
+
+const checkPayload = (keys) => {
+  payloadValid = keys.map((key) => key in payload)
+}
+
+const setPayload = (value) => {
+  if (!value) return
+  switch (value.inputName) {
+    case 'frequency':
+      payload.frequency = frequency.value
+      checkPayload(['amount', 'duration'])
+      payloadValid.includes(false) ? '' : checkDuration()
+      break
+    case 'amount':
+      payload.amount = amount.value
+      checkPayload(['frequency', 'duration'])
+      payloadValid.includes(false) ? '' : checkDuration()
+      break
+    case 'duration':
+      payload.duration = duration.value
+      checkPayload(['frequency', 'amount'])
+      payloadValid.includes(false) ? '' : checkDuration()
+      break
+    default:
+      break
+  }
+}
+
+const setValid = (value) => {
+  if (!value.value) {
+    switch (value.inputName) {
+      case 'frequency':
+        delete payload.frequency
+        break
+      case 'amount':
+        delete payload.amount
+        break
+      case 'duration':
+        delete payload.duration
+        break
+
+      default:
+        break
+    }
+    return
+  } else {
+    setPayload(value)
+  }
+}
 </script>
 
 <style lang="scss" scoped>

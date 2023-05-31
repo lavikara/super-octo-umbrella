@@ -37,6 +37,7 @@ import { emailValidation } from '@/utils/helpers'
 const store = useStore()
 
 const emit = defineEmits(['set', 'valid'])
+
 const props = defineProps({
   name: { type: String, default: () => '', required: true },
   id: { type: String, default: () => '', required: true },
@@ -61,7 +62,7 @@ const validate = () => {
       textDataValid.value = emailValidation(textData.value)
       if (textDataValid.value === null) {
         showError.value = true
-        errorMsg.value = 'Invalid email'
+        errorMsg.value = 'Email is invalid'
       }
       emit('valid', textDataValid.value)
       break

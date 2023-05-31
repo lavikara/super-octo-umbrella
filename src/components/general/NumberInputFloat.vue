@@ -3,16 +3,28 @@
     <div class="input-container tw-relative tw-flex tw-flex-col">
       <label for="name" class="tw-invisible">{{ label }}</label>
       <input
+        class="input-field tw-text-3xl tw-text-white"
+        :class="[
+          showError === true
+            ? 'tw-border-0 tw-border-b tw-border-b-red '
+            : 'tw-border-0 tw-border-b tw-border-b-white'
+        ]"
         ref="input"
-        type="text"
-        name="name"
-        id="name"
-        class="input-field tw-text-3xl tw-text-white tw-border-2 tw-border-b-white"
-        @focus="animateLabelOnFocus('amount')"
+        :type="type"
+        :name="name"
+        :id="id"
+        v-model="numberData"
+        @input="setInput"
+        @blur="validate"
+        @keydown.enter="input.blur()"
+        @focus="animateLabelOnFocus"
         required
       />
-      <p class="floating-label tw-text-gray-bg2" for="name" ref="amount" @click="input.focus()">
+      <p class="floating-label tw-text-gray-bg2" for="name" ref="labelText" @click="input.focus()">
         {{ label }}
+      </p>
+      <p class="tw-text-red tw-text-sm tw-absolute tw--bottom-6 tw-left-2">
+        {{ errorMsg }}
       </p>
     </div>
   </div>
@@ -20,23 +32,52 @@
 
 <script setup>
 import { ref } from 'vue'
+import { isNumber, addCommaToNumber } from '@/utils/helpers'
 
-defineProps({
-  label: { type: String, default: () => '', required: true }
+const emit = defineEmits(['set', 'valid'])
+
+const props = defineProps({
+  label: { type: String, default: () => '', required: true },
+  id: { type: String, default: () => '' },
+  name: { type: String, default: () => '' },
+  type: { type: String, default: () => '' }
 })
 
-let amount = ref()
+let labelText = ref()
 let input = ref()
+let numberData = ref(null)
+let emittedNumberData = ref(null)
+let numberDataValid = ref()
+let showError = ref(false)
+let errorMsg = ref('')
 
-const animateLabelOnFocus = (label) => {
-  switch (label) {
-    case 'amount':
-      amount.value.classList.add('input-selected')
-      break
-
-    default:
-      break
+const validate = () => {
+  numberDataValid.value = isNumber(emittedNumberData.value)
+  if (numberDataValid.value === false) {
+    showError.value = true
+    errorMsg.value = 'Number is invalid'
   }
+  if (numberData.value === null || numberData.value === '') {
+    showError.value = true
+    errorMsg.value = 'Number is invalid'
+    numberDataValid.value = false
+  }
+  emit('valid', { value: numberDataValid.value, inputName: props.name })
+}
+
+const setInput = () => {
+  if (numberData.value === '') return
+  numberData.value = numberData.value.replace(/\,/g, '') // 1125, but a string, so convert it to number
+  numberData.value = parseInt(numberData.value, 10)
+  emittedNumberData.value = numberData.value
+  numberData.value = addCommaToNumber(numberData.value)
+  showError.value = false
+  errorMsg.value = ''
+  emit('set', { value: emittedNumberData.value, inputName: props.name })
+}
+
+const animateLabelOnFocus = () => {
+  labelText.value.classList.add('input-selected')
 }
 </script>
 
@@ -68,10 +109,8 @@ const animateLabelOnFocus = (label) => {
     }
 
     input {
-      border: none;
       outline: none;
       resize: none;
-      border-bottom: 1px solid #ffffff;
       appearance: none;
       -webkit-appearance: none;
 
