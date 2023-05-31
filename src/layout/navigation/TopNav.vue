@@ -45,7 +45,7 @@
           :btnStyle="createAccountBtnStyle"
           @click="router.push({ name: 'CreateAccountPage' })"
         />
-        <div class="tw-flex tw-items-center tw-cursor-pointer tw-ml-8">
+        <div class="tw-flex tw-items-center tw-cursor-pointer tw-ml-8" @click="homePage">
           <div class="tw-w-10 tw-h-10 tw-bg-purple-bg3 tw-rounded-full tw-px-2 tw-py-1.5">
             <img class="" src="@/assets/img/profile-img.png" loading="lazy" alt="profile" />
           </div>
@@ -107,6 +107,10 @@ const setFocus = (route) => {
       companyFocus.value = true
       break
   }
+}
+
+const homePage = () => {
+  router.push({ name: 'HomePage' })
 }
 
 const gotoPage = () => {

@@ -18,7 +18,8 @@ module.exports = {
           bg6: '#29014B',
           bg7: '#43027E',
           bg8: '#C8C1FD',
-          bg9: '#10001F'
+          bg9: '#10001F',
+          bg10: '#21003D'
         },
         blue: {
           DEFAULT: '#35298A'

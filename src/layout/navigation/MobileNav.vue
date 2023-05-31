@@ -31,7 +31,10 @@
         <div
           class="menu-items tw-absolute tw-top-0 tw-left-0 tw-h-screen tw-w-full tw-flex tw-flex-col tw-bg-purple tw-pt-16 tw-px-4 tw-overflow-scroll tw-z-10"
         >
-          <div class="tw-flex tw-justify-end tw-items-center tw-cursor-pointer tw-mb-6">
+          <div
+            class="tw-flex tw-justify-end tw-items-center tw-cursor-pointer tw-mb-6"
+            @click="homePage"
+          >
             <div class="tw-w-10 tw-h-10 tw-bg-purple-bg3 tw-rounded-full tw-px-2 tw-py-1.5">
               <img class="" src="@/assets/img/profile-img.png" loading="lazy" alt="profile" />
             </div>
@@ -123,6 +126,12 @@ const closeSidebar = (title) => {
   menuState.value = false
 }
 
+const homePage = () => {
+  router.push({ name: 'HomePage' })
+  mobileSidebar.value.checked = false
+  menuState.value = false
+}
+
 const gotoHome = () => {
   switch (route.name) {
     case 'WaitlistPage':
@@ -147,7 +156,6 @@ const gotoCreateAccountPage = () => {
 }
 
 const updateMenuState = () => {
-  console.log('im here')
   menuState.value = !menuState.value
 }
 </script>

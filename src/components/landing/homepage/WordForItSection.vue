@@ -9,7 +9,12 @@
       <p class="tw-text-purple-bg1 tw-text-sm lg:tw-text-base tw-mb-8 lg:tw-mb-16 xxl:tw-mb-40">
         Listen to testimonials from Ardilla users building wealth
       </p>
-      <Carousel :autoplay="5000" :transition="500" :wrap-around="true" :items-to-show="3">
+      <Carousel
+        :autoplay="5000"
+        :transition="500"
+        :wrap-around="true"
+        :items-to-show="screenSize <= 767 ? 1.2 : 3"
+      >
         <Slide v-for="(slide, index) in slides" :key="slide.id + index">
           <div class="card">
             <span class="before tw-relative">
@@ -39,18 +44,18 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
+import { useStore } from 'vuex'
 import { Carousel, Slide, Pagination } from 'vue3-carousel'
 import testimonial1 from '@/assets/img/testimonial1.svg'
 import testimonial2 from '@/assets/img/testimonial2.svg'
-import testimonial3 from '@/assets/img/testimonial3.svg'
+
+const store = useStore()
 
 let slides = reactive([
   {
     id: 'testimonial1',
     header: 'Save',
-    text1: 'Save at your own pace!',
-    text2: 'Save your money daily, weekly, or monthly. No pressure. We work at your pace',
     url: testimonial1,
     name: 'MD - Miss Oyinye Dallas',
     content: 'What is Ardila and it benefits?'
@@ -58,9 +63,6 @@ let slides = reactive([
   {
     id: 'testimonial2',
     header: 'Learn',
-    text1: 'Financial freedom begins with You and Ardilla',
-    text2:
-      'Ardila offers wealth-building tips from great financial minds to help you get to where you need to be.',
     url: testimonial2,
     name: 'Sandra Ali',
     content: 'What is Ardila and it benefits?'
@@ -68,18 +70,13 @@ let slides = reactive([
   {
     id: 'testimonial3',
     header: 'Budget',
-    text1: 'Plan your money',
-    text2: 'Every good budget starts with a good plan for your money',
-    url: testimonial3,
+    url: testimonial1,
     name: 'MD - Miss Oyinye Dallas',
     content: 'What is Ardila and it benefits?'
   },
   {
     id: 'testimonial2',
     header: 'Learn',
-    text1: 'Financial freedom begins with You and Ardilla',
-    text2:
-      'Ardila offers wealth-building tips from great financial minds to help you get to where you need to be.',
     url: testimonial2,
     name: 'Sandra Ali',
     content: 'What is Ardila and it benefits?'
@@ -87,13 +84,15 @@ let slides = reactive([
   {
     id: 'testimonial1',
     header: 'Save',
-    text1: 'Save at your own pace!',
-    text2: 'Save your money daily, weekly, or monthly. No pressure. We work at your pace',
     url: testimonial1,
     name: 'Sandra Ali',
     content: 'What is Ardila and it benefits?'
   }
 ])
+
+const screenSize = computed(() => {
+  return store.state.screenSize
+})
 </script>
 
 <style lang="scss" scoped>
@@ -121,7 +120,7 @@ let slides = reactive([
       background-size: cover;
       background-position: center;
       box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2), 2px 2px 5px rgba(0, 0, 0, 0.2);
-      border-radius: 10px;
+      border-radius: 20px;
       transition: 0.5s ease all;
       -moz-transition: 0.5s ease all;
       -webkit-transition: 0.5s ease all;
@@ -137,6 +136,7 @@ let slides = reactive([
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        border-radius: 20px;
         background-image: linear-gradient(
           360deg,
           #030303 8.46%,
@@ -147,7 +147,7 @@ let slides = reactive([
         transition: 0.5s ease all;
         -moz-transition: 0.5s ease all;
         -webkit-transition: 0.5s ease all;
-        z-index: 1000;
+        z-index: 10;
       }
 
       &:hover {
@@ -161,7 +161,11 @@ let slides = reactive([
         height: 100%;
         display: flex;
         justify-content: center;
-        border-radius: 10px;
+        border-radius: 20px;
+      }
+
+      img {
+        border-radius: 20px;
       }
     }
   }

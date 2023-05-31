@@ -6,15 +6,24 @@
       >
         Our Values
       </h3>
-      <div class="tw-flex tw-flex-col md:tw-flex-row tw-items-center tw-mt-12">
-        <div class="tw-mb-12 md:tw-mb-0">
-          <img class="" src="@/assets/img/plan1.svg" loading="lazy" alt="plan" />
+      <p class="tw-max-w-xl tw-leading-9 tw-text-purple-bg1 tw-text-sm tw-mt-8">
+        At Ardilla, our mission is to help people across the continent build wealth and achieve well
+        thought out financial goals. However, we cannot do it alone.
+      </p>
+      <div
+        class="tw-flex tw-flex-col sm:tw-grid sm:tw-grid-cols-2 lg:tw-grid-cols-4 lg:tw-gap-8 tw-items-center tw-mt-12"
+      >
+        <div class="tw-mb-12 sm:tw-mb-0">
+          <img class="" src="@/assets/img/value1.svg" loading="lazy" alt="value" />
         </div>
-        <div class="md:tw-px-8 tw-mb-12 md:tw-mb-0">
-          <img class="" src="@/assets/img/plan2.svg" loading="lazy" alt="plan" />
+        <div class="lg:tw-pt-[3.4rem] xl:tw-pt-[4.4rem] tw-mb-12 sm:tw-mb-0">
+          <img class="" src="@/assets/img/value2.svg" loading="lazy" alt="value" />
+        </div>
+        <div class="lg:tw-pt-[3.4rem] xl:tw-pt-[4.4rem] tw-mb-12 sm:tw-mb-0">
+          <img class="" src="@/assets/img/value3.svg" loading="lazy" alt="value" />
         </div>
         <div>
-          <img class="" src="@/assets/img/plan3.svg" loading="lazy" alt="plan" />
+          <img class="" src="@/assets/img/value4.svg" loading="lazy" alt="value" />
         </div>
       </div>
     </div>
