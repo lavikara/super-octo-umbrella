@@ -10,7 +10,7 @@ const routes = [
       {
         path: '',
         name: 'DefaultLandingView',
-        redirect: '/waitlist'
+        redirect: '/home'
       },
       {
         path: '/waitlist',
